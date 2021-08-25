@@ -1,0 +1,9 @@
+*.csv
+
+*.otd
+
+*.xlsx
+
+*.txt
+
+!graphQLquerytests.txt
