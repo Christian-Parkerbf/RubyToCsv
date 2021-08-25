@@ -1,0 +1,69 @@
+query paginatethevariant(
+  $cursorend: String
+){
+  site{
+    products(first:50, after: $cursorend){
+      pageInfo{
+        startCursor
+        endCursor
+      }
+      edges{
+        node{
+          variants{
+            ...on VariantConnection{
+            edges{
+              node{
+                entityId
+              }
+            }
+          }
+          }
+        }
+      }
+    }
+  }
+}
+
+------------------------------------------------------------
+
+query variantavailable{
+  site{
+    product(variantEntityId: 2400){
+      name
+      availabilityV2{
+        ...available
+      }
+    }
+  }
+}
+
+
+
+fragment available on ProductAvailability{
+  __typename
+  ... on ProductAvailable{
+    status
+  }
+  ...on ProductUnavailable{
+    status
+    message
+    description
+  }
+}
+
+-------------------------------------------------------------
+
+query{
+  site{
+    products(first:5 entityIds:[114, 115, 117]){
+      edges{
+        node{
+          availabilityV2{
+            status
+            __typename
+          }
+        }
+      }
+    }
+  }
+}
